@@ -72,6 +72,7 @@ class mainWindow(QMainWindow):
         self.suggestedPaymentsButton.clicked.connect(self.suggPayments);
         self.statsButton.clicked.connect(self.stats);
         self.settingsButton.clicked.connect(self.settings);
+        self.historyButton.clicked.connect(self.history);
 
         #Set current group name in display
         if(current_group != None):
@@ -324,12 +325,13 @@ class mainWindow(QMainWindow):
                         num = float(num);
                         #Update the credit dictionary
                         creds[ele.text()+"_credit"] = num;
-            
+
             #Get debits API
             getDebits(creds, amt);  
             del(self.pw);
             return;    
 
+        #Variable to hold all lineedits
         self.lines = {};
         #Check if no groups are added
         if (SM.isGroupListEmpty(group_list) == True):
@@ -557,6 +559,73 @@ class mainWindow(QMainWindow):
         self.nw.buttonBox.rejected.connect(self.nw.close);
         #Display GUI box
         self.nw.show();
+
+    #Method to show transaction history
+    def history(self):
+        #Check if no groups are added
+        if (SM.isGroupListEmpty(group_list) == True):
+            self.disclaimer.setText("No Groups found!!!");
+        else:
+            #Create a new window
+            self.nw = EmptyWindow();
+            self.nw.resize(675,500);
+            self.nw.setWindowTitle("Transaction History");
+            #Delete unwanted elements
+            del(self.nw.formLayout);
+            del(self.nw.buttonBox);
+            #Create a table widget and a button widget
+            self.tableWidget = QTableWidget();
+            self.button = QPushButton("OK");
+            #Read csv file
+            csv_data = SM.getCsvFile(file);
+            #Add columns - Date, Description, Amount, Paid by, Shares
+            self.tableWidget.setRowCount(csv_data["Timestamp"].count());
+            self.tableWidget.setColumnCount(5);
+            self.tableWidget.setHorizontalHeaderLabels(["Date","Description","Amount","Paid by","Shares("+",".join([mem.name for mem in current_group.members])+")"]);
+
+            #Loop through all rows and collect expenses for all members in a selected month
+            for idx, row in csv_data.iterrows():
+                #Local temp varaibles
+                shares = [];
+                payers = [];
+                temp_row = dict(row);
+                #Loop through all elements to get the share and amount
+                for ele in row:
+                    #Enter only if the string is float
+                    try:
+                        ele = float(ele);
+                        #Check only for debit transactions
+                        if ele < 0:
+                            shares.append(abs(ele));
+                        #Check for credit transactions
+                        elif ele > 0:
+                            #Get payers names
+                            p = list(temp_row.keys())[list(temp_row.values()).index(ele)];
+                            #Set the element to 0 to avoid duplicate condition
+                            temp_row[p] = 0;
+                            #Append payers name to the list
+                            payers.append(p[:-7]);
+                    except:
+                        pass;
+
+                #Add the data into the respective fields
+                self.tableWidget.setItem(idx,0, QTableWidgetItem(str(row["Timestamp"][:10])));
+                self.tableWidget.setItem(idx,1, QTableWidgetItem(row["Description"]));
+                self.tableWidget.setItem(idx,2, QTableWidgetItem(str(sum(shares))));
+                self.tableWidget.setItem(idx,3, QTableWidgetItem(",".join(payers)));
+                self.tableWidget.setItem(idx,4, QTableWidgetItem(",".join([str(s) for s in shares])));
+
+            # Add box layout, add table to box layout and add box layout and button to widget
+            self.nw.layout = QVBoxLayout();
+            self.nw.layout.addWidget(self.tableWidget);
+            self.nw.layout.addWidget(self.button);
+            self.nw.setLayout(self.nw.layout);
+
+            #Link button to function
+            self.button.clicked.connect(self.nw.close);
+
+            # Show widget
+            self.nw.show();
 
 ######################################################################################################################################################################################
 #Method to create a new group

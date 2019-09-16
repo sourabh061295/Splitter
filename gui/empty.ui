@@ -38,7 +38,14 @@
      <height>221</height>
     </rect>
    </property>
-   <layout class="QFormLayout" name="formLayout"/>
+   <layout class="QFormLayout" name="formLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+    </property>
+   </layout>
   </widget>
  </widget>
  <resources/>

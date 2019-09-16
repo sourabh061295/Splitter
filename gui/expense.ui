@@ -194,7 +194,7 @@
     <bool>false</bool>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;This option can be selected when the difference in amounts of individual vary by very small amounts. The total amount will be adjusted accordingly.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;This option can be selected when the shares are to be divided based on percentage.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="toolTipDuration">
     <number>-1</number>
