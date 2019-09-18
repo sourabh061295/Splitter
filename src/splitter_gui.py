@@ -788,19 +788,21 @@ def openColorDialog():
 #Method to apply the settings
 def applySettings():
     global currency, color;
-    #Get the amount debit/credit for each member
-    amt_data = list(current_group.summary().values());
-    #Check if all accounts are settled
-    if (SM.duesSettled(amt_data) == True):
-        #Get selected currency
-        currency = window.nw.currencyBox.currentText();
-        window.disclaimer.setText("Settings Applied");
-        window.displaySummary();
-    else:
-        window.disclaimer.setText("Currency cannot be changed");
+    #Check if any group is selected
+    if (current_group != None):
+        #Get the amount debit/credit for each member
+        amt_data = list(current_group.summary().values());
+        #Check if all accounts are settled
+        if (SM.duesSettled(amt_data) == True):
+            #Get selected currency
+            currency = window.nw.currencyBox.currentText();
+            window.displaySummary();
+        else:
+            window.disclaimer.setText("Currency cannot be changed");
 
     #Apply the color theme
     window.setStyleSheet("QMainWindow {background: "+color+";}");
+    window.disclaimer.setText("Settings Applied");
     #Close and delete the window
     del(window.nw);
 
