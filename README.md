@@ -17,24 +17,20 @@ Easy to use GUI with various color schemes.
 - numpy
 
 ***Pre-Requisites***
-- Python 3.7.x and above with installed modules
-- PyQt5 software
+- Python 3.7.x or above (Download link: https://www.python.org/downloads/)
+- PyQt5 Software (Download link: https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.6/) 
+- Module dependencies
+    - pyqt5
+    - matplotlib
+    - pickle
+    - pandas
+    - numpy
 
-***Setup Procedure***
-- Install Python 3.7.x from https://www.python.org/downloads/
-- Get PyQt5 from https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.6/ 
-- Run the following commands to install the respective modules
-    - python -m pip install pyqt5
-    - python -m pip install matplotlib
-    - python -m pip install pickle
-    - python -m pip install pandas
-    - python -m pip install numpy
+***Setup***
+Run the setup.py file to initialize all the pre-requisites for the App.
 
 ***Run Procedure***
-- Open "command prompt" with the Splitter/src folder as root path.
-- Run the following command: "python ./splitter_gui.py"
-- Enjoy the App
-
+Double click the "run.py" file and enjoy the App.
 ***Contact Info***
 If any problems or queries, please feel free to mail me at "sksourabhkulkarni@gmail.com"
 

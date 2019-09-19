@@ -16,7 +16,7 @@ import splitter_module as SM
 class CDGwindow(QWidget):
     def __init__(self):
         super(CDGwindow,self).__init__();
-        loadUi('../gui/cdgw.ui',self);
+        loadUi('./gui/cdgw.ui',self);
         self.setWindowTitle("Select Group");
         self.setStyleSheet("QWidget {background: "+color+";}");
 ######################################################################################################################################################################################
@@ -24,7 +24,7 @@ class CDGwindow(QWidget):
 class Pwindow(QWidget):
     def __init__(self):
         super(Pwindow,self).__init__();
-        loadUi('../gui/payment.ui',self);
+        loadUi('./gui/payment.ui',self);
         self.setWindowTitle("Payment");
         self.setStyleSheet("QWidget {background: "+color+";}");
 ######################################################################################################################################################################################
@@ -32,7 +32,7 @@ class Pwindow(QWidget):
 class Ewindow(QWidget):
     def __init__(self):
         super(Ewindow,self).__init__();
-        loadUi('../gui/expense.ui',self);
+        loadUi('./gui/expense.ui',self);
         self.setWindowTitle("New Expense");
         self.setStyleSheet("QWidget {background: "+color+";}");
 ######################################################################################################################################################################################
@@ -40,14 +40,14 @@ class Ewindow(QWidget):
 class EmptyWindow(QWidget):
     def __init__(self):
         super(EmptyWindow,self).__init__();
-        loadUi('../gui/empty.ui',self);
+        loadUi('./gui/empty.ui',self);
         self.setStyleSheet("QWidget {background: "+color+";}");
 ######################################################################################################################################################################################
 #GUI class for Settings window
 class SettingsWindow(QDialog):
     def __init__(self):
         super(SettingsWindow,self).__init__();
-        loadUi('../gui/settings.ui',self);
+        loadUi('./gui/settings.ui',self);
         self.setWindowTitle("Settings");
         self.setStyleSheet("QDialog {background: "+color+";}");
 ######################################################################################################################################################################################
@@ -56,7 +56,7 @@ class mainWindow(QMainWindow):
     def __init__(self):
         #Load UI file
         super(mainWindow, self).__init__();
-        loadUi('../gui/splitter.ui',self);
+        loadUi('./gui/splitter.ui',self);
 
         #Set startup text
         self.setWindowTitle("SpLiTtEr!!!");
@@ -76,7 +76,7 @@ class mainWindow(QMainWindow):
 
         #Set current group name in display
         if(current_group != None):
-            self.textBrowser.setText("             "+current_group.name.upper());
+            self.groupName.setText(current_group.name.upper());
     
     #Pre-exit function before closing
     def closeEvent(self, event):
@@ -86,7 +86,7 @@ class mainWindow(QMainWindow):
         reply = QMessageBox.question(self, 'Quit', 'Are You Sure to Quit?', QMessageBox.No | QMessageBox.Yes);
         if reply == QMessageBox.Yes:
             #Store the objects into memory
-            with open('../data/record.pkl', 'wb') as output:
+            with open('./data/record.pkl', 'wb') as output:
                 pickle.dump(record, output, pickle.HIGHEST_PROTOCOL);
 
             #Get the objects to be stored in a dict
@@ -95,7 +95,7 @@ class mainWindow(QMainWindow):
             setting_data['color'] = color;
 
             #Store the settings data into memory
-            with open("../data/settings.pkl",'wb') as output:
+            with open("./data/settings.pkl",'wb') as output:
                 pickle.dump(setting_data, output, pickle.HIGHEST_PROTOCOL);
             #Close all windows
             plt.close();
@@ -106,6 +106,7 @@ class mainWindow(QMainWindow):
 
     #Group creation button API
     def newGroup(self):
+        window.disclaimer.setText("");
         input_window = QInputDialog();
         input_window.setOkButtonText("Create");
         name, okPressed = input_window.getText(self,"New Group","Group Name: ");
@@ -124,6 +125,7 @@ class mainWindow(QMainWindow):
     #Group change/delete button API
     def selectGroup(self):
         global group_list;
+        window.disclaimer.setText("");
         #Check if no groups are added
         if (SM.isGroupListEmpty(group_list) == True):
             self.disclaimer.setText("No Groups found!!!");
@@ -144,6 +146,7 @@ class mainWindow(QMainWindow):
 
     #Member addition button API
     def newMember(self):
+        window.disclaimer.setText("");
         #Check if no groups are added
         if (SM.isGroupListEmpty(group_list) == True):
             self.disclaimer.setText("No Groups found!!!");
@@ -167,6 +170,7 @@ class mainWindow(QMainWindow):
 
     #New expense addition button API
     def newExpense(self):
+        window.disclaimer.setText("");
         #List to hold all credits of all members
         creds = {};
         #Function for placeholder text
@@ -267,6 +271,7 @@ class mainWindow(QMainWindow):
             else:
                 #Call add expense API by passing all the required processed data
                 current_group.addExpense(des, creds, amt, debts);
+                self.disclaimer.setText("Expense added successfully.");
                 self.displaySummary();
                 del(self.nw);
                 return;
@@ -362,6 +367,7 @@ class mainWindow(QMainWindow):
 
     #Method to call payment API
     def newPayment(self):
+        window.disclaimer.setText("");
         #Pre process data to call payment API
         def processPayment():
             #Get the payer and check if the member exists
@@ -436,6 +442,7 @@ class mainWindow(QMainWindow):
 
     #Settle API
     def suggPayments(self):
+        window.disclaimer.setText("");
         global settle_data;
         self.settle_lines = [];
         #Check if no groups are added
@@ -474,6 +481,7 @@ class mainWindow(QMainWindow):
     
     #Function to plot statistics
     def stats(self):
+        window.disclaimer.setText("");
         #Check if no groups are added
         if (SM.isGroupListEmpty(group_list) == True):
             self.disclaimer.setText("No Groups found!!!");
@@ -551,6 +559,7 @@ class mainWindow(QMainWindow):
 
     #Method to apply settings
     def settings(self):
+        window.disclaimer.setText("");
         self.nw = SettingsWindow();
         #Map buttons and signals to the APIs
         self.nw.buttonBox.button(QDialogButtonBox.Ok).setText("Apply");
@@ -562,6 +571,7 @@ class mainWindow(QMainWindow):
 
     #Method to show transaction history
     def history(self):
+        window.disclaimer.setText("");
         #Check if no groups are added
         if (SM.isGroupListEmpty(group_list) == True):
             self.disclaimer.setText("No Groups found!!!");
@@ -636,7 +646,7 @@ def createGroup(name):
     #Add group object to the lists
     group_list.append(new_Group);
     #Get appropriate file name for the group
-    file = "../reports/"+name+".csv";
+    file = "./reports/"+name+".csv";
     #Add group object and data file into a dictionary for storage
     record[object_count] = new_Group;
     #Update object_counter
@@ -648,16 +658,16 @@ def createGroup(name):
     #Load the new group as current group
     current_group = new_Group;
     #Set current group name in display text
-    window.textBrowser.setText("             "+current_group.name.upper());
+    window.groupName.setText(current_group.name.upper());
     window.displayText.setText("");
 
 #Method to carryout object loading functionality
 def initilize_data():
     global group_list, current_group, record, object_count, file, currency, color;
     #Condition check for file existence
-    if(os.path.exists('../data/record.pkl')):
+    if(os.path.exists('./data/record.pkl')):
         #Read the pickle file
-        with open('../data/record.pkl', 'rb') as infile:
+        with open('./data/record.pkl', 'rb') as infile:
             #Try-catch block to handle empty file errors
             try:
                 loaded_data = pickle.load(infile);
@@ -671,9 +681,9 @@ def initilize_data():
                 object_count = len(record.keys());
 
     #Condition check for file existence
-    if(os.path.exists('../data/settings.pkl')):
+    if(os.path.exists('./data/settings.pkl')):
         #Read the pickle file
-        with open('../data/settings.pkl', 'rb') as infile:
+        with open('./data/settings.pkl', 'rb') as infile:
             #Try-catch block to handle empty file errors
             try:
                 loaded_data = pickle.load(infile);
@@ -685,7 +695,7 @@ def initilize_data():
                 current_group = loaded_data['current_group'];
                 color = loaded_data['color'];
                 if (current_group != None):
-                    file = "../reports/"+current_group.name+".csv";           
+                    file = "./reports/"+current_group.name+".csv";           
 
 #Method to change group context
 def changeGroup():
@@ -698,14 +708,14 @@ def changeGroup():
             #Load the respective object
             current_group = obj;
             #Load the working csv file
-            file = "../reports/"+name+".csv"; 
+            file = "./reports/"+name+".csv"; 
             break;
         
     #Close the CDGwindow post operation
     window.nw.close();
     del(window.nw);
     #Set display elements in the GUI
-    window.textBrowser.setText("             "+current_group.name.upper());
+    window.groupName.setText(current_group.name.upper());
     window.disclaimer.setText("Group changed to "+current_group.name);
     #Call Summary to update the info
     window.displaySummary();
@@ -732,7 +742,7 @@ def delGroup():
                     record[object_count] = record.pop(keys[i]);
                     object_count += 1;
                 #Delete the group object and csv file
-                os.remove("../reports/"+name+".csv");
+                os.remove("./reports/"+name+".csv");
                 del(deleted_obj);
                 #Disclaimer if group is empty after deletion
                 if (SM.isGroupListEmpty(group_list) == True):
@@ -740,7 +750,7 @@ def delGroup():
                 else:    
                     #Change active group
                     current_group = group_list[0];
-                    file = "../reports/"+current_group.name+".csv"; 
+                    file = "./reports/"+current_group.name+".csv"; 
                     #current_group.summary();
                     break;
         #Close CDG window
@@ -748,11 +758,11 @@ def delGroup():
         #Set display element in GUI post deletion
         window.disclaimer.setText("Group "+name+ " deleted");
         if(current_group != None):
-            window.textBrowser.setText("             "+current_group.name.upper());
+            window.groupName.setText(current_group.name.upper());
             #Call Summary to update the info
             window.displaySummary();
         else:
-            window.textBrowser.setText("");
+            window.groupName.setText("");
             window.displayText.setText("");
 
 #Method to settle up
@@ -770,6 +780,8 @@ def settleUp():
             current_group.addPayment(selected_line['From'], selected_line['To'], selected_line['amount']);
             #Track the index to remove later
             to_rem.append(window.settle_lines.index(line));
+            #Update the disclaimer text
+            window.disclaimer.setText("Payment from "+selected_line['From']+" To "+selected_line['To']+" successful.");
     #Remove the data after the accounts ahve been settled
     for i in range(len(to_rem)-1,-1,-1):
         del settle_data[to_rem[i]];

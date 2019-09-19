@@ -20,7 +20,7 @@ class group:
     #Method to add new member to the group
     def addMember(self, name):
         #Update file name
-        file_name = "../reports/"+self.name+".csv";
+        file_name = "./reports/"+self.name+".csv";
         #Add the new member people object to the list
         self.members.append(member(name));
         #Get current members in the group
@@ -47,7 +47,7 @@ class group:
         #Get all names of the members
         name_list = [mem.name for mem in self.members];
         #Update file name
-        file_name = "../reports/"+self.name+".csv";
+        file_name = "./reports/"+self.name+".csv";
         #Add timestamp to the transaction
         timestamp = datetime.now();
         #Create a temporary dictionary
@@ -87,7 +87,7 @@ class group:
     #Method to add payment
     def addPayment(self,frm,to,amt):
         #Update file name
-        file_name = "../reports/"+self.name+".csv";
+        file_name = "./reports/"+self.name+".csv";
         #Read the csv file
         csv_data = pd.read_csv(file_name);
         #Create a temporary dictionary
@@ -114,7 +114,7 @@ class group:
         for mem in self.members:
             info[mem.name] = mem.spends - mem.expenses;
         #Update file name
-        file_name = "../reports/"+self.name+".csv";
+        file_name = "./reports/"+self.name+".csv";
         #Read the csv file
         csv_data = pd.read_csv(file_name);
         #Iterate over all rows
