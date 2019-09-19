@@ -1,0 +1,6 @@
+src/__pycache__/
+data/
+*.csv
+*.pkl
+reports/
+/__pycache__/
