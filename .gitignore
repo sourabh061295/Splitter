@@ -1,5 +1,6 @@
 __pycache__/
 reports/
+data/
 data/record.pkl
 data/settings.pkl
 src/__pycache__/
