@@ -4,3 +4,4 @@ data/*
 src/__pycache__/
 *.csv
 *.pkl
+notes.txt

@@ -575,6 +575,11 @@ class mainWindow(QMainWindow):
 
     #Method to show transaction history
     def history(self):
+        #Define exiting method
+        def closeHistory():
+            self.nw.close;
+            del(self.nw);
+
         window.disclaimer.setText("");
         #Check if no groups are added
         if (SM.isGroupListEmpty(group_list) == True):
@@ -582,7 +587,7 @@ class mainWindow(QMainWindow):
         else:
             #Create a new window
             self.nw = EmptyWindow();
-            self.nw.resize(675,500);
+            self.nw.resize(830,500);
             self.nw.setWindowTitle("Transaction History");
             #Delete unwanted elements
             del(self.nw.formLayout);
@@ -622,11 +627,16 @@ class mainWindow(QMainWindow):
                     except:
                         pass;
 
-                #Add the data into the respective fields
+                #Add the data into the respective fields and set column width
+                self.tableWidget.setColumnWidth(0, 100);
                 self.tableWidget.setItem(idx,0, QTableWidgetItem(str(row["Timestamp"][:10])));
+                self.tableWidget.setColumnWidth(1, 200);
                 self.tableWidget.setItem(idx,1, QTableWidgetItem(row["Description"]));
+                self.tableWidget.setColumnWidth(2, 100);
                 self.tableWidget.setItem(idx,2, QTableWidgetItem(str(sum(shares))));
+                self.tableWidget.setColumnWidth(3, 150);
                 self.tableWidget.setItem(idx,3, QTableWidgetItem(",".join(payers)));
+                self.tableWidget.setColumnWidth(4, 200);
                 self.tableWidget.setItem(idx,4, QTableWidgetItem(",".join([str(s) for s in shares])));
 
             # Add box layout, add table to box layout and add box layout and button to widget
@@ -636,7 +646,7 @@ class mainWindow(QMainWindow):
             self.nw.setLayout(self.nw.layout);
 
             #Link button to function
-            self.button.clicked.connect(self.nw.close);
+            self.button.clicked.connect(closeHistory);
 
             # Show widget
             self.nw.show();
