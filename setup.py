@@ -53,6 +53,21 @@ try:
 except ImportError:
     print("Installing numpy...............");
     os.system("python -m pip install numpy");
+
+#Create working folders
 print("========================================================================================================================");
+print("Creating required directories...............");
+try: 
+    os.mkdir("data");
+except FileExistsError: pass;
+print("Created 'data' directory");
+try:
+    os.mkdir("reports");
+except FileExistsError: pass;
+print("Created 'reports' directory");
+print("Created working directories successfully.");
+print("========================================================================================================================");
+
+#Hold for user input
 os.system("pause");
 sys.exit(1);
