@@ -1,5 +1,9 @@
-src/__pycache__/
-data/*.pkl
-*.csv
+__pycache__/
 reports/
-/__pycache__/
+data/record.pkl
+data/settings.pkl
+src/__pycache__/
+*.csv
+*.pkl
+
+
