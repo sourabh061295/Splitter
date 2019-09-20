@@ -27,10 +27,10 @@ Easy to use GUI with various color schemes.
     - numpy
 
 ***Setup***
-Run the setup.py file to initialize all the pre-requisites for the App.
+Run the "setup.exe" file to setup the App.
 
 ***Run Procedure***
-Double click the "run.py" file and enjoy the App.
+Run the "SpLiTtEr.exe" and enjoy the App.
 
 ***Contact Info***
 If any problems or queries, please feel free to mail me at "sksourabhkulkarni@gmail.com"
