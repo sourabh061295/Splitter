@@ -242,7 +242,11 @@ class mainWindow(QMainWindow):
 
             #Check if all LineEdits are empty, if empty then equal share
             if (all(val == 0 for val in list(debts.values()))):
-                debts = debts.fromkeys(debts.keys(),(-1*(amt/current_group.size)));
+                #Check if the percentage option is selected
+                if (self.nw.perCheckBox.isChecked() == True):
+                    debts = debts.fromkeys(debts.keys(),(-1*(100/current_group.size)));
+                else:
+                    debts = debts.fromkeys(debts.keys(),(-1*(amt/current_group.size)));
 
             #Check if the equal+delta option is selected
             if (self.nw.edCheckBox.isChecked() == True):
