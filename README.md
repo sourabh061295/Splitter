@@ -34,4 +34,3 @@ Double click the "run.py" file and enjoy the App.
 
 ***Contact Info***
 If any problems or queries, please feel free to mail me at "sksourabhkulkarni@gmail.com"
-

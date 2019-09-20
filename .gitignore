@@ -1,10 +1,6 @@
 __pycache__/
-reports/
-data/
-data/record.pkl
-data/settings.pkl
+reports/*
+data/*
 src/__pycache__/
 *.csv
 *.pkl
-
-
