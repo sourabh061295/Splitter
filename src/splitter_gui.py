@@ -16,7 +16,7 @@ import splitter_module as SM
 class CDGwindow(QWidget):
     def __init__(self):
         super(CDGwindow,self).__init__();
-        loadUi('./gui/cdgw.ui',self);
+        loadUi('./gui/qtgui/cdgw.ui',self);
         self.setWindowTitle("Select Group");
         self.setStyleSheet("QWidget {background: "+color+";}");
 ######################################################################################################################################################################################
@@ -24,7 +24,7 @@ class CDGwindow(QWidget):
 class Pwindow(QWidget):
     def __init__(self):
         super(Pwindow,self).__init__();
-        loadUi('./gui/payment.ui',self);
+        loadUi('./gui/qtgui/payment.ui',self);
         self.setWindowTitle("Payment");
         self.setStyleSheet("QWidget {background: "+color+";}");
 ######################################################################################################################################################################################
@@ -32,7 +32,7 @@ class Pwindow(QWidget):
 class Ewindow(QWidget):
     def __init__(self):
         super(Ewindow,self).__init__();
-        loadUi('./gui/expense.ui',self);
+        loadUi('./gui/qtgui/expense.ui',self);
         self.setWindowTitle("New Expense");
         self.setStyleSheet("QWidget {background: "+color+";}");
 ######################################################################################################################################################################################
@@ -40,14 +40,14 @@ class Ewindow(QWidget):
 class EmptyWindow(QWidget):
     def __init__(self):
         super(EmptyWindow,self).__init__();
-        loadUi('./gui/empty.ui',self);
+        loadUi('./gui/qtgui/empty.ui',self);
         self.setStyleSheet("QWidget {background: "+color+";}");
 ######################################################################################################################################################################################
 #GUI class for Settings window
 class SettingsWindow(QDialog):
     def __init__(self):
         super(SettingsWindow,self).__init__();
-        loadUi('./gui/settings.ui',self);
+        loadUi('./gui/qtgui/settings.ui',self);
         self.setWindowTitle("Settings");
         self.setStyleSheet("QDialog {background: "+color+";}");
 ######################################################################################################################################################################################
@@ -56,7 +56,7 @@ class mainWindow(QMainWindow):
     def __init__(self):
         #Load UI file
         super(mainWindow, self).__init__();
-        loadUi('./gui/splitter.ui',self);
+        loadUi('./gui/qtgui/splitter.ui',self);
 
         #Set startup text
         self.setWindowTitle("SpLiTtEr!!!");
